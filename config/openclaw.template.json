@@ -1,0 +1,203 @@
+{
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "moonshot": {
+        "baseUrl": "https://api.moonshot.ai/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "kimi-k2.5",
+            "name": "Kimi K2.5",
+            "reasoning": true,
+            "input": ["text", "image"],
+            "cost": { "input": 0.001, "output": 0.004, "cacheRead": 0.0005, "cacheWrite": 0.002 },
+            "contextWindow": 262144,
+            "maxTokens": 65536,
+            "compat": { "supportsDeveloperRole": false }
+          },
+          {
+            "id": "kimi-k2-thinking-turbo",
+            "name": "Kimi K2 Thinking Turbo",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0.0008, "output": 0.003, "cacheRead": 0.0004, "cacheWrite": 0.0016 },
+            "contextWindow": 262144,
+            "maxTokens": 32768,
+            "compat": { "supportsDeveloperRole": false }
+          }
+        ]
+      },
+      "zai": {
+        "baseUrl": "https://api.z.ai/api/coding/paas/v4",
+        "api": "openai-completions",
+        "models": [
+          { "id": "glm-5", "name": "GLM-5", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 204800, "maxTokens": 131072 },
+          { "id": "glm-4.7", "name": "GLM-4.7", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 204800, "maxTokens": 131072 }
+        ]
+      }
+    }
+  },
+  "auth": {
+    "profiles": {
+      "anthropic:default": { "provider": "anthropic", "mode": "token" },
+      "openai:default": { "provider": "openai", "mode": "api_key" },
+      "openrouter:default": { "provider": "openrouter", "mode": "api_key" },
+      "moonshot:default": { "provider": "moonshot", "mode": "api_key" },
+      "zai:default": { "provider": "zai", "mode": "api_key" }
+    }
+  },
+  "browser": { "defaultProfile": "openclaw" },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-sonnet-4-6",
+        "fallbacks": [
+          "anthropic/claude-opus-4-6",
+          "moonshot/kimi-k2.5",
+          "google/gemini-3.1-pro-preview",
+          "zai/glm-4.7"
+        ]
+      },
+      "models": {
+        "anthropic/claude-opus-4-5": { "alias": "Opus" },
+        "anthropic/claude-opus-4-6": { "alias": "Opus 4.6" },
+        "anthropic/claude-sonnet-4-6": { "alias": "Sonnet" },
+        "moonshot/kimi-k2.5": { "alias": "Kimi" },
+        "moonshot/kimi-k2-thinking-turbo": { "alias": "Kimi Thinking" },
+        "openai/gpt-5.2": { "alias": "gpt" },
+        "google/gemini-3.1-pro-preview": { "alias": "Gemini" },
+        "zai/glm-5": { "alias": "GLM" }
+      },
+      "workspace": "${HOME}/.openclaw/workspace",
+      "memorySearch": {
+        "enabled": true,
+        "provider": "local",
+        "local": {
+          "modelPath": "hf:ggml-org/embeddinggemma-300m-qat-q8_0-GGUF/embeddinggemma-300m-qat-Q8_0.gguf"
+        },
+        "sync": { "onSessionStart": true, "onSearch": true }
+      },
+      "contextPruning": { "mode": "cache-ttl", "ttl": "2h" },
+      "compaction": {
+        "mode": "safeguard",
+        "memoryFlush": { "enabled": true, "softThresholdTokens": 4000 }
+      },
+      "heartbeat": { "every": "30m" },
+      "maxConcurrent": 8,
+      "subagents": { "maxConcurrent": 8 }
+    },
+    "list": [
+      { "id": "main", "workspace": "${HOME}/.openclaw/workspace", "model": { "primary": "anthropic/claude-sonnet-4-6" } },
+      {
+        "id": "king",
+        "workspace": "${HOME}/.openclaw/agents/king",
+        "model": { "primary": "anthropic/claude-sonnet-4-6" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      },
+      {
+        "id": "product-owner",
+        "workspace": "${HOME}/.openclaw/agents/product-owner",
+        "model": { "primary": "moonshot/kimi-k2.5" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      },
+      {
+        "id": "tech-lead",
+        "workspace": "${HOME}/.openclaw/agents/tech-lead",
+        "model": { "primary": "anthropic/claude-sonnet-4-6" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      },
+      {
+        "id": "content",
+        "workspace": "${HOME}/.openclaw/agents/content",
+        "model": { "primary": "moonshot/kimi-k2.5" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      },
+      {
+        "id": "researcher",
+        "workspace": "${HOME}/.openclaw/agents/researcher",
+        "model": { "primary": "moonshot/kimi-k2.5" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      },
+      {
+        "id": "verifier",
+        "workspace": "${HOME}/.openclaw/agents/verifier",
+        "model": { "primary": "anthropic/claude-sonnet-4-6" },
+        "tools": { "deny": ["gateway","cron","sessions_spawn","sessions_send"], "elevated": { "enabled": false } }
+      }
+    ]
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "groupPolicy": "allowlist",
+      "streaming": "partial",
+      "accounts": {
+        "main": {
+          "dmPolicy": "allowlist",
+          "botToken": "${TELEGRAM_BOT_TOKEN_MAIN}",
+          "allowFrom": ["6883367773"],
+          "groupPolicy": "allowlist",
+          "streaming": "partial"
+        }
+      }
+    },
+    "discord": {
+      "enabled": true,
+      "allowBots": true,
+      "groupPolicy": "open",
+      "streaming": "off",
+      "guilds": {
+        "1475051197416083520": { "slug": "mingfang-tech", "requireMention": false }
+      },
+      "accounts": {
+        "king": {
+          "name": "King", "enabled": true,
+          "token": "${DISCORD_TOKEN_KING}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": {
+            "1475051197416083520": {
+              "channels": {
+                "1475051197978247244": { "allow": true, "requireMention": false },
+                "1475052378351730812": { "allow": true, "requireMention": true },
+                "1475052380444692592": { "allow": true, "requireMention": true },
+                "1475052382151774270": { "allow": true, "requireMention": true }
+              }
+            }
+          }
+        },
+        "product-owner": {
+          "name": "Product Owner", "enabled": true,
+          "token": "${DISCORD_TOKEN_PRODUCT_OWNER}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": { "1475051197416083520": { "channels": { "1475052378351730812": { "allow": true, "requireMention": true } } } }
+        },
+        "tech-lead": {
+          "name": "Tech Lead", "enabled": true,
+          "token": "${DISCORD_TOKEN_TECH_LEAD}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": { "1475051197416083520": { "channels": { "1475052380444692592": { "allow": true, "requireMention": true } } } }
+        },
+        "content": {
+          "name": "Content Writer", "enabled": true,
+          "token": "${DISCORD_TOKEN_CONTENT}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": { "1475051197416083520": { "channels": { "1475052382151774270": { "allow": true, "requireMention": true } } } }
+        },
+        "researcher": {
+          "name": "Researcher", "enabled": true,
+          "token": "${DISCORD_TOKEN_RESEARCHER}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": { "1475051197416083520": { "channels": { "1476322844760871160": { "allow": true, "requireMention": true } } } }
+        },
+        "verifier": {
+          "name": "Verifier", "enabled": true,
+          "token": "${DISCORD_TOKEN_VERIFIER}",
+          "groupPolicy": "open", "streaming": "off",
+          "guilds": { "1475051197416083520": { "channels": { "1476322704964452564": { "allow": true, "requireMention": true } } } }
+        }
+      }
+    }
+  }
+}
