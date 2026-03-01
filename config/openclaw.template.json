@@ -84,6 +84,7 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
+      "allowFrom": ["YOUR_TELEGRAM_USER_ID"],
       "groupPolicy": "allowlist",
       "streaming": "partial",
       "accounts": {
