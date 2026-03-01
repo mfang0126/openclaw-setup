@@ -32,16 +32,27 @@ fi
 mkdir -p "$OPENCLAW_DIR"
 
 echo "⚙️  Applying config..."
-# Substitute ${HOME} in template
-sed "s|\${HOME}|$HOME|g" "$REPO_DIR/config/openclaw.template.json" > "$OPENCLAW_DIR/openclaw.json"
+# Substitute all variables in template at once
+sed -e "s|\${HOME}|$HOME|g" \
+    -e "s|\${TELEGRAM_BOT_TOKEN}|$TELEGRAM_BOT_TOKEN|g" \
+    "$REPO_DIR/config/openclaw.template.json" > "$OPENCLAW_DIR/openclaw.json"
 
-# Inject API keys + tokens via openclaw config
-openclaw config set env.OPENROUTER_API_KEY "$OPENROUTER_API_KEY" 2>/dev/null || true
-openclaw config set env.MOONSHOT_API_KEY "$MOONSHOT_API_KEY" 2>/dev/null || true
-openclaw config set env.TELEGRAM_BOT_TOKEN "$TELEGRAM_BOT_TOKEN" 2>/dev/null || true
-
-# Set gateway mode
-openclaw config set gateway.mode "local" 2>/dev/null || true
+# Inject API keys into env section (these are read by OpenClaw at runtime)
+python3 -c "
+import json, sys
+with open('$OPENCLAW_DIR/openclaw.json') as f:
+    c = json.load(f)
+c.setdefault('env', {})
+c['env']['OPENROUTER_API_KEY'] = '''$OPENROUTER_API_KEY'''
+c['env']['MOONSHOT_API_KEY'] = '''$MOONSHOT_API_KEY'''
+c.setdefault('gateway', {})['mode'] = 'local'
+# Create session dir
+import os
+os.makedirs('$OPENCLAW_DIR/agents/main/sessions', exist_ok=True)
+with open('$OPENCLAW_DIR/openclaw.json', 'w') as f:
+    json.dump(c, f, indent=2)
+print('  ✓ Keys + gateway.mode injected')
+"
 
 echo "✅ Config applied"
 
