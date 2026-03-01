@@ -10,12 +10,9 @@ fi
 SKILLS=(
   firecrawl
   ui-ux-pro-max
-  coding-agent
   research-hub
-  html-screenshot
   docx
   pdf
-  github
   nano-banana-pro
 )
 
