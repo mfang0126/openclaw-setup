@@ -19,8 +19,11 @@ echo "✅ Secrets loaded"
 
 # ── 2. Install OpenClaw ───────────────────────────────────────────────────────
 if ! command -v openclaw &>/dev/null; then
-  echo "📦 Installing OpenClaw..."
-  npm install -g openclaw
+  echo "📦 Installing OpenClaw (this handles Node.js automatically)..."
+  curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --no-onboard --no-prompt
+  # Reload PATH so openclaw is available
+  export PATH="$HOME/.local/bin:/usr/local/bin:$PATH"
+  source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true
 else
   echo "✅ OpenClaw already installed ($(openclaw --version 2>/dev/null || echo 'unknown version'))"
 fi

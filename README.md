@@ -13,9 +13,11 @@ Includes a pre-built agent team:
 
 ## Requirements
 
-- macOS (Homebrew) or Linux (Node 20+)
-- `npm` installed
+- macOS or Linux (Windows: use WSL)
+- `curl` (pre-installed on macOS/Linux)
 - Your API keys (see below)
+
+> No Node.js or npm needed — the installer handles everything automatically.
 
 ## Quick Start
 
