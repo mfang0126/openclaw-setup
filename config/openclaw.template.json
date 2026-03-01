@@ -10,21 +10,40 @@
             "id": "kimi-k2.5",
             "name": "Kimi K2.5",
             "reasoning": true,
-            "input": ["text", "image"],
-            "cost": { "input": 0.001, "output": 0.004, "cacheRead": 0.0005, "cacheWrite": 0.002 },
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0.001,
+              "output": 0.004,
+              "cacheRead": 0.0005,
+              "cacheWrite": 0.002
+            },
             "contextWindow": 262144,
             "maxTokens": 65536,
-            "compat": { "supportsDeveloperRole": false }
+            "compat": {
+              "supportsDeveloperRole": false
+            }
           },
           {
             "id": "kimi-k2-thinking-turbo",
             "name": "Kimi K2 Thinking Turbo",
             "reasoning": true,
-            "input": ["text"],
-            "cost": { "input": 0.0008, "output": 0.003, "cacheRead": 0.0004, "cacheWrite": 0.0016 },
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.0008,
+              "output": 0.003,
+              "cacheRead": 0.0004,
+              "cacheWrite": 0.0016
+            },
             "contextWindow": 262144,
             "maxTokens": 32768,
-            "compat": { "supportsDeveloperRole": false }
+            "compat": {
+              "supportsDeveloperRole": false
+            }
           }
         ]
       }
@@ -32,8 +51,14 @@
   },
   "auth": {
     "profiles": {
-      "openrouter:default": { "provider": "openrouter", "mode": "api_key" },
-      "moonshot:default": { "provider": "moonshot", "mode": "api_key" }
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      },
+      "moonshot:default": {
+        "provider": "moonshot",
+        "mode": "api_key"
+      }
     }
   },
   "agents": {
@@ -47,12 +72,24 @@
         ]
       },
       "models": {
-        "moonshot/kimi-k2.5": { "alias": "Kimi" },
-        "moonshot/kimi-k2-thinking-turbo": { "alias": "Kimi Thinking" },
-        "openrouter/anthropic/claude-sonnet-4-5": { "alias": "Sonnet" },
-        "openrouter/anthropic/claude-opus-4": { "alias": "Opus" },
-        "openrouter/google/gemini-2.5-pro": { "alias": "Gemini" },
-        "openrouter/openai/gpt-4o": { "alias": "GPT" }
+        "moonshot/kimi-k2.5": {
+          "alias": "Kimi"
+        },
+        "moonshot/kimi-k2-thinking-turbo": {
+          "alias": "Kimi Thinking"
+        },
+        "openrouter/anthropic/claude-sonnet-4-5": {
+          "alias": "Sonnet"
+        },
+        "openrouter/anthropic/claude-opus-4": {
+          "alias": "Opus"
+        },
+        "openrouter/google/gemini-2.5-pro": {
+          "alias": "Gemini"
+        },
+        "openrouter/openai/gpt-4o": {
+          "alias": "GPT"
+        }
       },
       "workspace": "${HOME}/.openclaw/workspace",
       "memorySearch": {
@@ -61,22 +98,37 @@
         "local": {
           "modelPath": "hf:ggml-org/embeddinggemma-300m-qat-q8_0-GGUF/embeddinggemma-300m-qat-Q8_0.gguf"
         },
-        "sync": { "onSessionStart": true, "onSearch": true }
+        "sync": {
+          "onSessionStart": true,
+          "onSearch": true
+        }
       },
-      "contextPruning": { "mode": "cache-ttl", "ttl": "2h" },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "2h"
+      },
       "compaction": {
         "mode": "safeguard",
-        "memoryFlush": { "enabled": true, "softThresholdTokens": 4000 }
+        "memoryFlush": {
+          "enabled": true,
+          "softThresholdTokens": 4000
+        }
       },
-      "heartbeat": { "every": "30m" },
+      "heartbeat": {
+        "every": "30m"
+      },
       "maxConcurrent": 4,
-      "subagents": { "maxConcurrent": 4 }
+      "subagents": {
+        "maxConcurrent": 4
+      }
     },
     "list": [
       {
         "id": "main",
         "workspace": "${HOME}/.openclaw/workspace",
-        "model": { "primary": "openrouter/anthropic/claude-sonnet-4-5" }
+        "model": {
+          "primary": "openrouter/anthropic/claude-sonnet-4-5"
+        }
       }
     ]
   },
@@ -84,14 +136,18 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "allowFrom": ["YOUR_TELEGRAM_USER_ID"],
+      "allowFrom": [
+        "YOUR_TELEGRAM_USER_ID"
+      ],
       "groupPolicy": "allowlist",
       "streaming": "partial",
       "accounts": {
         "main": {
           "dmPolicy": "allowlist",
           "botToken": "${TELEGRAM_BOT_TOKEN}",
-          "allowFrom": ["YOUR_TELEGRAM_USER_ID"],
+          "allowFrom": [
+            "YOUR_TELEGRAM_USER_ID"
+          ],
           "groupPolicy": "allowlist",
           "streaming": "partial"
         }
