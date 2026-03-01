@@ -46,9 +46,10 @@ c.setdefault('env', {})
 c['env']['OPENROUTER_API_KEY'] = '''$OPENROUTER_API_KEY'''
 c['env']['MOONSHOT_API_KEY'] = '''$MOONSHOT_API_KEY'''
 c.setdefault('gateway', {})['mode'] = 'local'
-# Create session dir
+# Create required dirs
 import os
 os.makedirs('$OPENCLAW_DIR/agents/main/sessions', exist_ok=True)
+os.makedirs('$OPENCLAW_DIR/credentials', exist_ok=True)
 with open('$OPENCLAW_DIR/openclaw.json', 'w') as f:
     json.dump(c, f, indent=2)
 print('  ✓ Keys + gateway.mode injected')
