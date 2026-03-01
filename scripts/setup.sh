@@ -35,9 +35,13 @@ echo "⚙️  Applying config..."
 # Substitute ${HOME} in template
 sed "s|\${HOME}|$HOME|g" "$REPO_DIR/config/openclaw.template.json" > "$OPENCLAW_DIR/openclaw.json"
 
-# Inject API keys via openclaw config
+# Inject API keys + tokens via openclaw config
 openclaw config set env.OPENROUTER_API_KEY "$OPENROUTER_API_KEY" 2>/dev/null || true
 openclaw config set env.MOONSHOT_API_KEY "$MOONSHOT_API_KEY" 2>/dev/null || true
+openclaw config set env.TELEGRAM_BOT_TOKEN "$TELEGRAM_BOT_TOKEN" 2>/dev/null || true
+
+# Set gateway mode
+openclaw config set gateway.mode "local" 2>/dev/null || true
 
 echo "✅ Config applied"
 
@@ -65,16 +69,24 @@ if [ -f "$REPO_DIR/scripts/install-skills.sh" ]; then
   bash "$REPO_DIR/scripts/install-skills.sh"
 fi
 
-# ── 6. Doctor + Start ─────────────────────────────────────────────────────────
+# ── 6. Permissions ────────────────────────────────────────────────────────────
+chmod 700 "$OPENCLAW_DIR" 2>/dev/null || true
+chmod 600 "$OPENCLAW_DIR/openclaw.json" 2>/dev/null || true
+
+# ── 7. Doctor + Start ─────────────────────────────────────────────────────────
 echo "🔧 Running doctor..."
-openclaw doctor --quiet 2>/dev/null || openclaw doctor
+openclaw doctor --fix 2>/dev/null || openclaw doctor || true
 
 echo "🟢 Starting gateway..."
-openclaw gateway restart
-
-sleep 2
-openclaw status
-
-echo ""
-echo "✨ Done! OpenClaw is running."
-echo "   Dashboard: http://localhost:19000"
+if openclaw gateway restart 2>/dev/null; then
+  sleep 2
+  openclaw status
+  echo ""
+  echo "✨ Done! OpenClaw is running."
+  echo "   Dashboard: http://localhost:19000"
+else
+  echo ""
+  echo "⚠️  Gateway service unavailable (container/WSL?)."
+  echo "   Start manually: openclaw gateway start --foreground"
+  echo "   Or: nohup openclaw gateway start --foreground &"
+fi
