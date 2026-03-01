@@ -137,7 +137,7 @@
         "main": {
           "dmPolicy": "allowlist",
           "botToken": "${TELEGRAM_BOT_TOKEN_MAIN}",
-          "allowFrom": ["6883367773"],
+          "allowFrom": ["YOUR_TELEGRAM_USER_ID"],
           "groupPolicy": "allowlist",
           "streaming": "partial"
         }
@@ -149,7 +149,7 @@
       "groupPolicy": "open",
       "streaming": "off",
       "guilds": {
-        "1475051197416083520": { "slug": "mingfang-tech", "requireMention": false }
+        "YOUR_GUILD_ID": { "slug": "your-guild-slug", "requireMention": false }
       },
       "accounts": {
         "king": {
@@ -157,12 +157,12 @@
           "token": "${DISCORD_TOKEN_KING}",
           "groupPolicy": "open", "streaming": "off",
           "guilds": {
-            "1475051197416083520": {
+            "YOUR_GUILD_ID": {
               "channels": {
-                "1475051197978247244": { "allow": true, "requireMention": false },
-                "1475052378351730812": { "allow": true, "requireMention": true },
-                "1475052380444692592": { "allow": true, "requireMention": true },
-                "1475052382151774270": { "allow": true, "requireMention": true }
+                "YOUR_GENERAL_CHANNEL_ID": { "allow": true, "requireMention": false },
+                "YOUR_PRODUCT_OWNER_CHANNEL_ID": { "allow": true, "requireMention": true },
+                "YOUR_TECH_LEAD_CHANNEL_ID": { "allow": true, "requireMention": true },
+                "YOUR_CONTENT_CHANNEL_ID": { "allow": true, "requireMention": true }
               }
             }
           }
@@ -171,31 +171,31 @@
           "name": "Product Owner", "enabled": true,
           "token": "${DISCORD_TOKEN_PRODUCT_OWNER}",
           "groupPolicy": "open", "streaming": "off",
-          "guilds": { "1475051197416083520": { "channels": { "1475052378351730812": { "allow": true, "requireMention": true } } } }
+          "guilds": { "YOUR_GUILD_ID": { "channels": { "YOUR_PRODUCT_OWNER_CHANNEL_ID": { "allow": true, "requireMention": true } } } }
         },
         "tech-lead": {
           "name": "Tech Lead", "enabled": true,
           "token": "${DISCORD_TOKEN_TECH_LEAD}",
           "groupPolicy": "open", "streaming": "off",
-          "guilds": { "1475051197416083520": { "channels": { "1475052380444692592": { "allow": true, "requireMention": true } } } }
+          "guilds": { "YOUR_GUILD_ID": { "channels": { "YOUR_TECH_LEAD_CHANNEL_ID": { "allow": true, "requireMention": true } } } }
         },
         "content": {
           "name": "Content Writer", "enabled": true,
           "token": "${DISCORD_TOKEN_CONTENT}",
           "groupPolicy": "open", "streaming": "off",
-          "guilds": { "1475051197416083520": { "channels": { "1475052382151774270": { "allow": true, "requireMention": true } } } }
+          "guilds": { "YOUR_GUILD_ID": { "channels": { "YOUR_CONTENT_CHANNEL_ID": { "allow": true, "requireMention": true } } } }
         },
         "researcher": {
           "name": "Researcher", "enabled": true,
           "token": "${DISCORD_TOKEN_RESEARCHER}",
           "groupPolicy": "open", "streaming": "off",
-          "guilds": { "1475051197416083520": { "channels": { "1476322844760871160": { "allow": true, "requireMention": true } } } }
+          "guilds": { "YOUR_GUILD_ID": { "channels": { "YOUR_RESEARCH_CHANNEL_ID": { "allow": true, "requireMention": true } } } }
         },
         "verifier": {
           "name": "Verifier", "enabled": true,
           "token": "${DISCORD_TOKEN_VERIFIER}",
           "groupPolicy": "open", "streaming": "off",
-          "guilds": { "1475051197416083520": { "channels": { "1476322704964452564": { "allow": true, "requireMention": true } } } }
+          "guilds": { "YOUR_GUILD_ID": { "channels": { "YOUR_VERIFY_CHANNEL_ID": { "allow": true, "requireMention": true } } } }
         }
       }
     }
