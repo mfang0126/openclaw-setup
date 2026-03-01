@@ -33,15 +33,8 @@ echo "⚙️  Applying config..."
 sed "s|\${HOME}|$HOME|g" "$REPO_DIR/config/openclaw.template.json" > "$OPENCLAW_DIR/openclaw.json"
 
 # Inject API keys via openclaw config
-openclaw config set env.ANTHROPIC_API_KEY "$ANTHROPIC_API_KEY" 2>/dev/null || true
-openclaw config set env.OPENAI_API_KEY "$OPENAI_API_KEY" 2>/dev/null || true
 openclaw config set env.OPENROUTER_API_KEY "$OPENROUTER_API_KEY" 2>/dev/null || true
 openclaw config set env.MOONSHOT_API_KEY "$MOONSHOT_API_KEY" 2>/dev/null || true
-openclaw config set env.GEMINI_API_KEY "$GEMINI_API_KEY" 2>/dev/null || true
-openclaw config set env.ZAI_API_KEY "$ZAI_API_KEY" 2>/dev/null || true
-openclaw config set env.ELEVENLABS_API_KEY "$ELEVENLABS_API_KEY" 2>/dev/null || true
-openclaw config set env.TAVILY_API_KEY "$TAVILY_API_KEY" 2>/dev/null || true
-openclaw config set env.MATON_API_KEY "$MATON_API_KEY" 2>/dev/null || true
 
 echo "✅ Config applied"
 

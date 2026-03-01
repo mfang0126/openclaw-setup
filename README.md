@@ -40,27 +40,20 @@ Done. OpenClaw gateway starts automatically with all agents configured.
 ## Configuration
 
 ### 1. secrets.env
-Copy `secrets.env.example` → `secrets.env` and fill in:
-- AI provider API keys (Anthropic, OpenAI, OpenRouter, etc.)
-- Discord bot tokens (one per agent)
-- Telegram bot tokens
+Copy `secrets.env.example` → `secrets.env` and fill in 3 keys:
+
+| Key | Where to get it |
+|-----|----------------|
+| `OPENROUTER_API_KEY` | [openrouter.ai](https://openrouter.ai) → Keys |
+| `MOONSHOT_API_KEY` | [platform.moonshot.cn](https://platform.moonshot.cn) → API Keys |
+| `TELEGRAM_BOT_TOKEN` | Message [@BotFather](https://t.me/BotFather) on Telegram → `/newbot` |
 
 ### 2. config/openclaw.template.json
-Replace these placeholders with your own values:
+Only one placeholder to replace:
 
 | Placeholder | Where to find it |
 |-------------|-----------------|
-| `YOUR_GUILD_ID` | Discord server → Right-click server name → Copy Server ID |
-| `YOUR_GENERAL_CHANNEL_ID` | Right-click channel → Copy Channel ID |
-| `YOUR_PRODUCT_OWNER_CHANNEL_ID` | Same |
-| `YOUR_TECH_LEAD_CHANNEL_ID` | Same |
-| `YOUR_CONTENT_CHANNEL_ID` | Same |
-| `YOUR_RESEARCH_CHANNEL_ID` | Same |
-| `YOUR_VERIFY_CHANNEL_ID` | Same |
-| `YOUR_TELEGRAM_USER_ID` | Message @userinfobot on Telegram |
-| `your-guild-slug` | Any label you want |
-
-> Enable Developer Mode in Discord: Settings → Advanced → Developer Mode
+| `YOUR_TELEGRAM_USER_ID` | Message [@userinfobot](https://t.me/userinfobot) on Telegram — it replies with your ID |
 
 ## What Gets Installed
 
