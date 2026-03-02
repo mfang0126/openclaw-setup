@@ -121,3 +121,18 @@ chmod +x scripts/setup.sh
 
 **想换 AI 模型？**
 编辑 `config/openclaw.template.json` → `agents.defaults.model.primary`
+---
+
+## 已知问题（v1）
+
+当前 shell 脚本方案的已知限制，计划后续改进。
+
+| 问题 | 状态 |
+|------|------|
+| Config 首次运行可能未完全生效，可能需要手动执行 `openclaw doctor --fix` | ⚠️ 待修 |
+| 安装完成后 WebUI 不会自动打开 | ⚠️ 待修 |
+| 只能通过 TUI 进入，非技术用户体验差 | ⚠️ 待修 |
+| 未达到"装好即用"状态，还需要一些手动步骤 | ⚠️ 待修 |
+| Skills 安装如遇网络问题可能静默失败 | ⚠️ 待修 |
+
+**计划中：** 打包为 macOS `.pkg` 安装包，支持图形界面填写 Key、自动配置、安装完成后自动打开 WebUI。

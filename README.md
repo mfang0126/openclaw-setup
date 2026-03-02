@@ -123,3 +123,18 @@ chmod +x scripts/setup.sh
 Edit `config/openclaw.template.json` → `agents.defaults.model.primary`
 
 ---
+---
+
+## Known Issues (v1)
+
+These are known limitations in the current shell-script approach. Planned for future improvement.
+
+| Issue | Status |
+|-------|--------|
+| Config doesn't fully apply on first run — `openclaw doctor --fix` may be needed manually | ⚠️ Open |
+| WebUI doesn't open automatically after setup | ⚠️ Open |
+| TUI-only access — non-technical users may find it confusing | ⚠️ Open |
+| Not truly "install and use immediately" — some manual steps still required | ⚠️ Open |
+| Skills installation may fail silently if `clawhub` has connectivity issues | ⚠️ Open |
+
+**Planned:** Proper macOS `.pkg` installer with GUI key input, auto-config, and auto-open WebUI on completion.
